@@ -18,6 +18,10 @@ class Battle
     my_attack = me.attack
     enemy_attack = enemy.attack
 
+    print_loading
+
+    status
+
     if my_attack > enemy_attack
       puts "[BATTLE] PLAYER ATTACKED!"
       enemy.energy -= 2
@@ -30,21 +34,21 @@ class Battle
   end
 
   def status
-    puts "\n***************************"
-    puts "######## MY STATUS ########"
+    battle_initial_message
+    puts "-------- MY STATUS --------"
     print_status(me.energy, me.ability)
+    puts "---------------------------\n"
     
-    puts "\n###### ENEMY  STATUS ######"
+    puts "\n------ ENEMY  STATUS ------"
     print_status(enemy.energy, enemy.ability)
-    puts "***************************\n"
+    puts "---------------------------\n\n"
   end
 
   def turn
     clear_screen
-    battle_initial_message
-    compute_attacks
     status
-    sleep 0.75
+    compute_attacks
+    sleep 0.5
   end
 
   def is_over
@@ -61,7 +65,6 @@ class Battle
 
   private
     def print_status(energy, ability)
-      puts "- Energy: #{energy}"
-      puts "- Ability: #{ability}"
+      puts "| Energy: #{energy} | Ability: #{ability} |"
     end
 end

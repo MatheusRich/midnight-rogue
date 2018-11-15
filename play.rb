@@ -12,5 +12,7 @@ until battle.is_over
   battle.turn
 end
 
+clear_screen
+battle.status
 puts "THE BATTLE IS OVER!!"
 puts "The winner is #{battle.winner}"
