@@ -1,9 +1,9 @@
 class Player
   attr_accessor :energy, :ability, :name
 
-  def initialize(name)
-    @energy = generate_energy_status
-    @ability = generate_ability_status
+  def initialize(name, energy=generate_energy_status, ability=generate_ability_status)
+    @energy = energy.to_i
+    @ability = ability.to_i
     @name = name
   end
 
