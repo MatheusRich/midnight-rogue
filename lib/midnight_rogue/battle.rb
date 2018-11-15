@@ -19,7 +19,7 @@ class Battle
     enemy_attack = enemy.attack
 
     print_loading
-
+    clear_screen
     status
 
     if my_attack > enemy_attack

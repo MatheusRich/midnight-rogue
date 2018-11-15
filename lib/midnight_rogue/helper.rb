@@ -12,6 +12,5 @@ module Helper
       print ". "
       sleep 0.25
     end
-    clear_screen
   end
 end
