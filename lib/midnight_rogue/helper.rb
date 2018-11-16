@@ -8,8 +8,10 @@ module Helper
   end
 
   def print_loading(number_of_dots=3)
-    number_of_dots.times do 
-      print ". "
+    last_dot = number_of_dots - 1
+    number_of_dots.times do |i|
+      print "."
+      print " " unless i == last_dot
       sleep 0.25
     end
   end

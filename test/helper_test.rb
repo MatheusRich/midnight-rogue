@@ -5,7 +5,7 @@ class HelperTest < Minitest::Test
     expects(:system).at_least_once
     clear_screen
   end
-  
+
   def test_dice
     assert_includes 1..6, roll_dice
   end
@@ -14,13 +14,15 @@ class HelperTest < Minitest::Test
     output, errors = capture_io do
       print_loading
     end
-    assert_equal ". . . ", output
+    assert_equal ". . .", output
+    assert_empty errors
   end
 
   def test_custom_loading
     output, errors = capture_io do
       print_loading(5)
     end
-    assert_equal ". . . . . ", output
+    assert_equal ". . . . .", output
+    assert_empty errors
   end
 end
