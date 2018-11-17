@@ -1,8 +1,8 @@
 class Battle
-  attr_accessor :me, :enemy
+  attr_accessor :player, :enemy
 
-  def initialize(me, enemy)
-    @me = me
+  def initialize(player, enemy)
+    @player = player
     @enemy = enemy
   end
 
@@ -13,7 +13,7 @@ class Battle
   end
 
   def compute_attacks
-    my_attack = me.attack
+    my_attack = player.attack
     enemy_attack = enemy.attack
 
     print_loading
@@ -25,7 +25,7 @@ class Battle
       enemy.energy -= 2
     elsif enemy_attack > my_attack
       puts "[BATTLE] ENEMY ATTACKED!"
-      me.energy -= 2
+      player.energy -= 2
     else
       puts "[BATTLE] PLAYER DEFENDED!"
     end
@@ -34,7 +34,7 @@ class Battle
   def status
     battle_initial_message
     puts "-------- MY STATUS --------"
-    print_fighter_status(me.energy, me.ability)
+    print_fighter_status(player.energy, player.ability)
     puts "---------------------------\n"
     puts "\n------ ENEMY  STATUS ------"
     print_fighter_status(enemy.energy, enemy.ability)
@@ -49,12 +49,12 @@ class Battle
   end
 
   def is_over
-    me.dead? || enemy.dead?
+    player.dead? || enemy.dead?
   end
 
   def winner
     if self.is_over
-      enemy.dead? ? me.name : enemy.name
+      enemy.dead? ? player.name : enemy.name
     else
       "THE BATTLE HAS NOT OVER YET!"
     end

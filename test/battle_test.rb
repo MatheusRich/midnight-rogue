@@ -9,7 +9,7 @@ class BattleTest < Minitest::Test
   attr_accessor :player, :enemy, :battle
 
   def test_should_create_battle
-    assert_equal player, battle.me
+    assert_equal player, battle.player
     assert_equal enemy, battle.enemy
   end
 
@@ -111,7 +111,7 @@ class BattleTest < Minitest::Test
     battle.enemy.energy = 10
     refute battle.is_over
 
-    battle.me.energy = 0
+    battle.player.energy = 0
     assert battle.is_over
   end
 
@@ -120,7 +120,7 @@ class BattleTest < Minitest::Test
     assert_equal player.name, battle.winner
 
     battle.enemy.energy = 10
-    battle.me.energy = 0
+    battle.player.energy = 0
     assert_equal enemy.name, battle.winner
   end
 
