@@ -1,7 +1,7 @@
 require_relative "lib/midnight_rogue"
 
 me = Player.new("Mc Champions")
-enemy = Player.new("Monstro da Rima")
+enemy = Player.new("Leonardo Chim")
 battle = Battle.new(me, enemy)
 
 until battle.is_over

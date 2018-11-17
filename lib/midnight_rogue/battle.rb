@@ -4,8 +4,6 @@ class Battle
   def initialize(me, enemy)
     @me = me
     @enemy = enemy
-    
-    battle_initial_message
   end
 
   def battle_initial_message
@@ -36,11 +34,10 @@ class Battle
   def status
     battle_initial_message
     puts "-------- MY STATUS --------"
-    print_status(me.energy, me.ability)
+    print_fighter_status(me.energy, me.ability)
     puts "---------------------------\n"
-    
     puts "\n------ ENEMY  STATUS ------"
-    print_status(enemy.energy, enemy.ability)
+    print_fighter_status(enemy.energy, enemy.ability)
     puts "---------------------------\n\n"
   end
 
@@ -64,7 +61,7 @@ class Battle
   end
 
   private
-    def print_status(energy, ability)
+    def print_fighter_status(energy, ability)
       puts "| Energy: #{energy} | Ability: #{ability} |"
     end
 end
