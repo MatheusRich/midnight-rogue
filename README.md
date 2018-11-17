@@ -11,4 +11,6 @@ ruby play.rb
 Have fun!
 
 # Contributing
-* **Ruby version:** 2.5.1p57
+
+* **Min ruby version:** 2.3.0
+* **Recommended ruby version:** 2.5.1p57

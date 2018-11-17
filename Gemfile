@@ -1,5 +1,8 @@
 source "https://rubygems.org"
-ruby "2.5.1"
+
+group :development, :test do
+  gem "rake"
+end
 
 group :test do
   gem "minitest"
