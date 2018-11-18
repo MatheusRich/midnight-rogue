@@ -6,9 +6,9 @@
   <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/maintainability">
     <img src="https://api.codeclimate.com/v1/badges/7405d24320764c751449/maintainability"/>
   </a>
-  <!-- <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/test_coverage">
+  <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/test_coverage">
     <img src="https://api.codeclimate.com/v1/badges/7405d24320764c751449/test_coverage"/>
-  </a> -->
+  </a>
 </p>
 
 This is a digital version of the role-play-gamebook **Midnight Rogue**, part of Steve Jackson and Ian Livingstone's [Fighting Fantasy](https://en.wikipedia.org/wiki/Fighting_Fantasy) series.
