@@ -77,7 +77,7 @@ class Battle
 
     compute_turn(user_choice)
 
-    # continue
+    # press_to_continue
     sleep 1
   end
 

@@ -26,6 +26,35 @@ class HelperTest < Minitest::Test
     assert_empty errors
   end
 
+  def test_should_display_choices
+    choices = { 1 => "First Choice", 2 => "Second Choice" }
+
+    output, errors = capture_io do
+      display_choices(choices)
+    end
+
+    assert_match "[ ? ] What are you going to do?", output
+    choices.each do |index, choice|
+      assert_match "#{index}\t- #{choice}", output
+    end
+    assert_empty errors
+  end
+
+  def test_should_display_choices_with_an_index_offset
+    choices = { 1 => "First Choice", 2 => "Second Choice" }
+    offset = 2
+
+    output, errors = capture_io do
+      display_choices(choices, offset)
+    end
+
+    assert_match "[ ? ] What are you going to do?", output
+    choices.each do |index, choice|
+      assert_match "#{index + offset}\t- #{choice}", output
+    end
+    assert_empty errors  
+  end
+
   def test_get_user_choice
     valid_choices = [1, 2, 3]
     user_input = "1"
@@ -76,12 +105,44 @@ class HelperTest < Minitest::Test
     assert_empty errors
   end
 
+  def test_should_display_header_if_a_block_is_given_and_user_selects_an_invalid_choice
+    valid_choices = [1, 2]
+    first_user_input = "0"
+    second_user_input = "1"
+    header = "Display this header when user selects an invalid choice"
+    STDIN.expects(:gets).twice.returns(first_user_input, second_user_input)
+
+    selected_choice = ""
+    output, errors = capture_io do
+      selected_choice = get_user_choice(valid_choices) do
+        puts header
+      end
+    end
+
+    assert_match header, output
+    assert_equal second_user_input, selected_choice
+    assert_empty errors
+  end
+
+  def test_press_to_continue
+    STDIN.expects(:getch)
+    output, errors = capture_io do
+      press_to_continue
+    end
+
+    assert_match "[ PRESS ANY KEY ]", output
+    assert_empty errors
+  end
+
   def test_exit_game
     expects(:clear_screen)
     expects(:exit)
     
-    capture_io do
+    output, errors = capture_io do
       exit_game
     end
+
+    assert_match "Cya!", output
+    assert_empty errors
   end
 end
