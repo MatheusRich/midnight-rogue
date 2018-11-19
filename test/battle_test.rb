@@ -95,6 +95,10 @@ class BattleTest < Minitest::Test
     assert_empty errors
   end
 
+  def test_should_compute_turn
+  end
+
+  # TODO: Improve this test
   def test_battle_turn
     battle.expects(:display_battle_header)
     battle.expects(:get_user_choice)
@@ -165,6 +169,9 @@ class BattleTest < Minitest::Test
     end
     assert_equal status, output
     assert_empty errors
+  end
+
+  def test_should_display_battle_header
   end
 
   def test_should_display_battle_choices
