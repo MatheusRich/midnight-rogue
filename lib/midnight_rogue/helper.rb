@@ -16,23 +16,37 @@ module Helper
     end
   end
 
+  def display_choices(choices, inicial_index_offset=0)
+    puts "\n[ ? ] What are you going to do?\n\n"
+    choices.each do |index, choice|
+      puts "#{index + inicial_index_offset}\t- #{choice}"
+    end
+    puts "exit\t- Quit Game"
+  end
 
-
-  def get_user_option(valid_options)
+  def get_user_choice(valid_choices)
     loop do
-      puts "[ ? ] What are you going to do?"
+      print "\nOption: "
       input = STDIN.gets.chomp
 
-      return input if valid_options.include? input
+      return input if valid_choices.include? input.to_i
       exit_game if input.downcase == "exit"
 
-      puts "'#{input}' is not a valid option.\n\nTry again:"
+      yield if block_given? # This is a "hotspot" to display a header
+
+      puts "\n[ HEY YOU! ] '#{input}' is not a valid choice.\n\n"
+      puts "Try again:\n"
     end
   end
 
   def exit_game
     clear_screen
+    puts "Cya!"
     exit
   end
 
+  def continue
+    print "\n[ Press any key ] "
+    STDIN.getch
+  end
 end
