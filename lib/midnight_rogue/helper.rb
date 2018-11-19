@@ -38,15 +38,15 @@ module Helper
       puts "Try again:\n"
     end
   end
+  
+  def press_to_continue
+    print "\n[ PRESS ANY KEY ] "
+    STDIN.getch
+  end
 
   def exit_game
     clear_screen
     puts "Cya!"
     exit
-  end
-
-  def continue
-    print "\n[ Press any key ] "
-    STDIN.getch
   end
 end
