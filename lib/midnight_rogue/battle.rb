@@ -1,6 +1,11 @@
 class Battle
   attr_accessor :player, :enemy
 
+  AVAILABLE_CHOICES =  {
+    1 => "Attack",
+    2 => "Use Luck"
+  }
+
   def initialize(player, enemy)
     @player = player
     @enemy = enemy
@@ -16,9 +21,11 @@ class Battle
     my_attack = player.attack
     enemy_attack = enemy.attack
 
+    print "\n"
     print_loading
     clear_screen
     status
+    print "\n"
 
     if my_attack > enemy_attack
       puts "[BATTLE] PLAYER ATTACKED!"
@@ -38,14 +45,40 @@ class Battle
     puts "---------------------------\n"
     puts "\n------ ENEMY  STATUS ------"
     print_fighter_status(enemy.energy, enemy.ability)
-    puts "---------------------------\n\n"
+    puts "---------------------------\n"
   end
 
-  def turn
+  def display_battle_header
     clear_screen
     status
-    compute_attacks
-    sleep 0.5
+    display_battle_choices
+  end
+
+  def compute_turn(user_choice)
+    battle_choice = AVAILABLE_CHOICES[user_choice.to_i]
+    
+    # FIXME: 
+    # I don't think this is the best way to implement this switch case. 
+    # Using a string is too unstable, and using just the hash is hard to understand
+    case battle_choice
+    when "Attack"
+     compute_attacks
+    when "Use Luck" # TODO
+      puts "\n[ MY BAD ] You were unlucky, this feature is not implemented yet!"
+    end
+  end
+  
+  def turn
+    display_battle_header
+    
+    user_choice = get_user_choice(AVAILABLE_CHOICES.keys) do 
+      display_battle_header
+    end
+
+    compute_turn(user_choice)
+
+    # continue
+    sleep 1
   end
 
   def is_over
@@ -60,6 +93,10 @@ class Battle
     end
   end
 
+  def display_battle_choices
+    display_choices(AVAILABLE_CHOICES)
+  end
+    
   private
     def print_fighter_status(energy, ability)
       puts "| Energy: #{energy} | Ability: #{ability} |"
