@@ -52,7 +52,7 @@ class BattleTest < Minitest::Test
     end
 
     assert_equal (enemy_initial_energy - damage), enemy.energy
-    assert_equal "[BATTLE] PLAYER ATTACKED!\n", output
+    assert_match "[BATTLE] PLAYER ATTACKED", output
     assert_empty errors
   end
 
@@ -71,7 +71,7 @@ class BattleTest < Minitest::Test
     end
 
     assert_equal (player_initial_energy - damage), player.energy
-    assert_equal "[BATTLE] ENEMY ATTACKED!\n", output
+    assert_match "[BATTLE] ENEMY ATTACKED!", output
     assert_empty errors
   end
 
@@ -91,15 +91,15 @@ class BattleTest < Minitest::Test
 
     assert_equal player_initial_energy , player.energy
     assert_equal enemy_initial_energy , enemy.energy
-    assert_equal "[BATTLE] PLAYER DEFENDED!\n", output
+    assert_match "[BATTLE] PLAYER DEFENDED!", output
     assert_empty errors
   end
 
   def test_battle_turn
-    battle.expects(:clear_screen)
-    battle.expects(:status)
-    battle.expects(:compute_attacks)
-    battle.expects(:sleep).with(0.5)
+    battle.expects(:display_battle_header)
+    battle.expects(:get_user_choice)
+    battle.expects(:compute_turn)
+    battle.expects(:sleep).with(1)
 
     battle.turn
   end
@@ -129,25 +129,29 @@ class BattleTest < Minitest::Test
   end
 
   def test_display_battle_status
-    expected_output =  <<~HEREDOC
+    battle_header =  <<~HEREDOC
       ---------------------------
       -       B A T T L E       -
       ---------------------------
+    HEREDOC
+    player_status = <<~HEREDOC
       -------- MY STATUS --------
       | Energy: #{player.energy} | Ability: #{player.ability} |
       ---------------------------
-
+    HEREDOC
+    enemy_status = <<~HEREDOC
       ------ ENEMY  STATUS ------
       | Energy: #{enemy.energy} | Ability: #{enemy.ability} |
       ---------------------------
-
     HEREDOC
 
     output, errors = capture_io do
       battle.status
     end
 
-    assert_equal expected_output, output
+    assert_match battle_header, output
+    assert_match player_status, output
+    assert_match enemy_status, output
     assert_empty errors
   end
 
@@ -160,6 +164,19 @@ class BattleTest < Minitest::Test
       battle.send(:print_fighter_status, energy, ability)
     end
     assert_equal status, output
+    assert_empty errors
+  end
+
+  def test_should_display_battle_choices
+    battle_choices = <<~HEREDOC
+      1\t- Attack
+      2\t- Use Luck
+    HEREDOC
+    output, errors = capture_io do
+      battle.display_battle_choices
+    end
+
+    assert_match battle_choices, output
     assert_empty errors
   end
 end
