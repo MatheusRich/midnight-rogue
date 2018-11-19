@@ -1,12 +1,12 @@
 # Midnight Rogue
 <p>
-  <a href="https://travis-ci.com/MatheusRich/midnight-rogue">
+  <a href="https://travis-ci.com/MatheusRich/midnight-rogue" target="_blank">
     <img src="https://travis-ci.com/MatheusRich/midnight-rogue.svg?branch=master"/>
   </a>
-  <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/maintainability">
+  <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/maintainability" target="_blank">
     <img src="https://api.codeclimate.com/v1/badges/7405d24320764c751449/maintainability"/>
   </a>
-  <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/test_coverage">
+  <a href="https://codeclimate.com/github/MatheusRich/midnight-rogue/test_coverage" target="_blank">
     <img src="https://api.codeclimate.com/v1/badges/7405d24320764c751449/test_coverage"/>
   </a>
 </p>
