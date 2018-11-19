@@ -17,12 +17,10 @@ class Player
 
   private
     def generate_ability_status
-      dice = roll_dice
-      return dice + 6
+      roll_dice + 6
     end
 
     def generate_energy_status
-      dice = roll_dice
-      return dice + 12
+      roll_dice + 12
     end
 end
