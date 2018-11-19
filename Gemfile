@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem 'colored2'
+
 group :development, :test do
   gem "rake"
 end
