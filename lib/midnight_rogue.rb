@@ -6,6 +6,7 @@ require_relative "midnight_rogue/helper"
 
 include Helper
 
+# Move this to the right file
 trap "SIGINT" do
   exit_game
 end
