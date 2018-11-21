@@ -1,5 +1,10 @@
 require_relative "lib/midnight_rogue"
 
+# Move this to the right file
+trap "SIGINT" do
+  exit_game
+end
+
 me = Player.new("Mc Champions")
 enemy = Player.new("Leonardo Chim")
 battle = Battle.new(me, enemy)

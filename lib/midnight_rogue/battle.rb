@@ -71,7 +71,7 @@ class Battle
   def turn
     display_battle_header
     
-    user_choice = get_user_choice(AVAILABLE_CHOICES.keys) do 
+    user_choice = get_user_choice(AVAILABLE_CHOICES.keys) do
       display_battle_header
     end
 
