@@ -95,17 +95,34 @@ class BattleTest < Minitest::Test
     assert_empty errors
   end
 
-  def test_should_compute_turn
+  def test_user_chooses_to_attack
+    battle.expects(:compute_attacks)
+    
+    user_choice = 1
+    battle.compute_turn(user_choice)
   end
 
-  # TODO: Improve this test
+  def test_user_chooses_to_use_luck
+    user_choice = 2
+    output, errors = capture_io do
+      battle.compute_turn(user_choice)
+    end
+    
+    assert_match "[ MY BAD ] You were unlucky, this feature is not implemented yet!", output
+    assert_empty errors
+  end
+  
   def test_battle_turn
-    battle.expects(:display_battle_header)
-    battle.expects(:get_user_choice)
-    battle.expects(:compute_turn)
+    STDIN.stubs(:gets).returns("0", "1")
+    battle.stubs(:display_battle_header)
+    battle.expects(:compute_attacks)
     battle.expects(:sleep).with(1)
-
-    battle.turn
+    
+    output, errors = capture_io do
+      battle.turn
+    end
+    assert_match "[ HEY YOU! ] '0' is not a valid choice.", output
+    assert_empty errors
   end
 
   def test_battle_ending
@@ -172,6 +189,11 @@ class BattleTest < Minitest::Test
   end
 
   def test_should_display_battle_header
+    battle.expects(:clear_screen)
+    battle.expects(:status)
+    battle.expects(:display_battle_choices)
+
+    battle.display_battle_header
   end
 
   def test_should_display_battle_choices
