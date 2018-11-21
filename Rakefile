@@ -6,6 +6,12 @@ task :console do
 end
 task c: :console
 
+desc "Outputs TODOS and FIXME comments"
+task :notes do
+  cmd = "grep -rni --exclude=Rakefile -e '#TODO' -e '# TODO' -e '#FIXME' -e '# FIXME' ."
+  system(cmd)
+end
+
 Rake::TestTask.new do |t|
   t.pattern = "test/**/*_test.rb"
   t.warning = false
