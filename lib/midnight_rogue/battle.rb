@@ -1,14 +1,14 @@
 class Battle
-  attr_accessor :player, :enemy
+  attr_accessor :player, :enemies
 
   AVAILABLE_CHOICES =  {
     1 => "Attack",
     2 => "Use Luck"
   }
 
-  def initialize(player, enemy)
+  def initialize(player, enemies)
     @player = player
-    @enemy = enemy
+    @enemies = enemies
   end
 
   def battle_initial_message
@@ -18,33 +18,42 @@ class Battle
   end
 
   def compute_attacks
-    my_attack = player.attack
-    enemy_attack = enemy.attack
+    player_attack = player.attack
 
-    print "\n"
-    print_loading
-    clear_screen
-    status
-    print "\n"
+    enemies.each_with_index do |enemy, index|
+      enemy_attack = enemy.attack
+      
+      print "\n"
+      sleep 1
+      print_loading
+      clear_screen
+      status
+      print "\n"
 
-    if my_attack > enemy_attack
-      puts "[BATTLE] PLAYER ATTACKED!"
-      enemy.energy -= 2
-    elsif enemy_attack > my_attack
-      puts "[BATTLE] ENEMY ATTACKED!"
-      player.energy -= 2
-    else
-      puts "[BATTLE] PLAYER DEFENDED!"
+      puts "Player Attack: #{player_attack} | Enemy Attack: #{enemy_attack}\n"
+  
+      if player_attack > enemy_attack && index == 0
+        puts "[BATTLE] PLAYER ATTACKED!"
+        enemy.energy -= 2
+      elsif enemy_attack > player_attack
+        puts "[BATTLE] ENEMY ATTACKED!"
+        player.energy -= 2
+      else
+        puts "[BATTLE] PLAYER DEFENDED!"
+      end
     end
   end
 
   def status
     battle_initial_message
+    # puts "-------- #{player.name.upcase}'s STATUS --------"
     puts "-------- MY STATUS --------"
     print_fighter_status(player.energy, player.ability)
     puts "---------------------------\n"
-    puts "\n------ ENEMY  STATUS ------"
-    print_fighter_status(enemy.energy, enemy.ability)
+    puts "\n------ " + "ENEMY".pluralize(enemies.count).upcase +  " STATUS ------"
+    enemies.each do |enemy| 
+      print_fighter_status(enemy.energy, enemy.ability)
+    end
     puts "---------------------------\n"
   end
 
@@ -54,7 +63,7 @@ class Battle
     display_battle_choices
   end
 
-  def compute_turn(user_choice)
+  def compute_choice(user_choice)
     battle_choice = AVAILABLE_CHOICES[user_choice.to_i]
     
     # FIXME: 
@@ -65,6 +74,7 @@ class Battle
      compute_attacks
     when "Use Luck" # TODO
       puts "\n[ MY BAD ] You were unlucky, this feature is not implemented yet!"
+      sleep 1
     end
   end
   
@@ -75,14 +85,15 @@ class Battle
       display_battle_header
     end
 
-    compute_turn(user_choice)
+    compute_choice(user_choice)
+    
+    remove_dead_enemies
 
-    # press_to_continue
     sleep 1
   end
 
   def is_over
-    player.dead? || enemy.dead?
+    player.dead? || enemies.all?(&:dead?)
   end
 
   def winner
@@ -100,5 +111,9 @@ class Battle
   private
     def print_fighter_status(energy, ability)
       puts "| Energy: #{energy} | Ability: #{ability} |"
+    end
+
+    def remove_dead_enemies
+      enemies.reject!(&:dead?)
     end
 end

@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
-gem 'colored2'
+gem "colored2"
+gem "activesupport"
 
 group :development, :test do
   gem "rake"

@@ -99,13 +99,13 @@ class BattleTest < Minitest::Test
     battle.expects(:compute_attacks)
     
     user_choice = 1
-    battle.compute_turn(user_choice)
+    battle.compute_choice(user_choice)
   end
 
   def test_user_chooses_to_use_luck
     user_choice = 2
     output, errors = capture_io do
-      battle.compute_turn(user_choice)
+      battle.compute_choice(user_choice)
     end
     
     assert_match "[ MY BAD ] You were unlucky, this feature is not implemented yet!", output
